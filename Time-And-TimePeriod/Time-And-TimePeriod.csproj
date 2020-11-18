@@ -6,4 +6,8 @@
     <RootNamespace>Time_And_TimePeriod</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Time-And-TimePeriod-Lib\Time-And-TimePeriod-Lib.csproj" />
+  </ItemGroup>
+
 </Project>
