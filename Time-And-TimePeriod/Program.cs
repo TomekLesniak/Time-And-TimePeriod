@@ -7,7 +7,7 @@ namespace Time_And_TimePeriod
     {
         static void Main(string[] args)
         {
-            var t = new Time("00:2:49");
+            var t = new Time("00:20:49");
             var t2 = new Time("00:20:49");
             Console.WriteLine(t.Equals(t2));
         }

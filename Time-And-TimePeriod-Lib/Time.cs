@@ -43,15 +43,8 @@ namespace Time_And_TimePeriod_Lib
             Seconds = seconds;
         }
 
-        public bool Equals(Time other)
-        {
-            return Hours == other.Hours && Minutes == other.Minutes && Seconds == other.Seconds;
-        }
-
-        public override string ToString()
-        {
-            var format = "00";
-            return $"{Hours.ToString(format)}:{Minutes.ToString(format)}:{Seconds.ToString(format)}";
-        }
+        public bool Equals(Time other) => (Hours, Minutes, Seconds) == (other.Hours, other.Minutes, other.Seconds);
+        public override string ToString() => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
+        
     } 
 }
