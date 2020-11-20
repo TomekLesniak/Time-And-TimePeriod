@@ -1,1 +1,2 @@
-# Time-And-TimePeriod
+# C# Time & TimePeriod implementation
+
