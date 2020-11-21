@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Time_And_TimePeriod_Lib
 {
-    public struct Time : IEquatable<Time>
+    public struct Time : IEquatable<Time>, IComparable<Time>
     {
         public byte Hours { get; }
         public byte Minutes { get; }
@@ -44,7 +44,16 @@ namespace Time_And_TimePeriod_Lib
         }
 
         public bool Equals(Time other) => (Hours, Minutes, Seconds) == (other.Hours, other.Minutes, other.Seconds);
+        public override int GetHashCode() => (Hours, Minutes, Seconds).GetHashCode();
         public override string ToString() => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
-        
+
+        public int CompareTo(Time other)
+        {
+            var hoursComparison = Hours.CompareTo(other.Hours);
+            if (hoursComparison != 0) return hoursComparison;
+            var minutesComparison = Minutes.CompareTo(other.Minutes);
+            if (minutesComparison != 0) return minutesComparison;
+            return Seconds.CompareTo(other.Seconds);
+        }
     } 
 }
