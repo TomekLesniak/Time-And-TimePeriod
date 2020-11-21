@@ -43,10 +43,10 @@ namespace Time_And_TimePeriod_Lib
             Seconds = seconds;
         }
 
-        public bool Equals(Time other) => (Hours, Minutes, Seconds) == (other.Hours, other.Minutes, other.Seconds);
         public override int GetHashCode() => (Hours, Minutes, Seconds).GetHashCode();
         public override string ToString() => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
-        public override bool Equals(object obj) => obj is Time ? Equals((Time) obj) : false;
+        public bool Equals(Time other) => (Hours, Minutes, Seconds) == (other.Hours, other.Minutes, other.Seconds);
+        public override bool Equals(object obj) => obj is Time time && Equals(time);
         public static bool Equals(Time t1, Time t2) => t1.Equals(t2);
 
         public int CompareTo(Time other)

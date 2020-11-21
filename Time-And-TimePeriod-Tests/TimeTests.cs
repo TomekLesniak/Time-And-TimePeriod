@@ -111,5 +111,80 @@ namespace Time_And_TimePeriod_Tests
         }
 
         #endregion
+
+        #region Operators
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(0, 0, 0, false)]
+        [DataRow(12, 0, 0, false)]
+        [DataRow(12, 0, 1, true)]
+        [DataRow(11, 59, 59, false)]
+        [DataRow(23, 12, 12, true)]
+        public void GreaterThen_CompareToTimeAtTwelve_TrueIfGreaterFalseIfLessOrEqual(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new Time((byte) hour, (byte) minute, (byte) second);
+            var timeCompared = new Time(12, 0, 0);
+
+            var result = timeTested > timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(12, 0, 0, true)]
+        [DataRow(12, 0, 1, true)]
+        [DataRow(11, 59, 59, false)]
+        [DataRow(0, 0, 59, false)]
+        [DataRow(22, 23, 0, true)]
+        public void GreaterOrEqualTo_CompareToTimeAtTwelve_TrueIfGreaterOrEqualFalseIfLess(int hour, int minute,
+            int second, bool expectedResult)
+        {
+            var timeTested = new Time((byte) hour, (byte) minute, (byte) second);
+            var timeCompared = new Time(12, 0, 0);
+
+            var result = timeTested >= timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+
+        [DataTestMethod]
+        [DataRow(0, 0, 0, true)]
+        [DataRow(12, 0, 0, false)]
+        [DataRow(12, 0, 1, false)]
+        [DataRow(11, 59, 59, true)]
+        [DataRow(23, 12, 12, false)]
+        public void LessThen_CompareToTimeAtTwelve_TrueIfSmallerFalseIfGreaterOrEqual(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new Time((byte)hour, (byte)minute, (byte)second);
+            var timeCompared = new Time(12, 0, 0);
+
+            var result = timeTested < timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(12, 0, 0, true)]
+        [DataRow(12, 0, 1, false)]
+        [DataRow(11, 59, 59, true)]
+        [DataRow(0, 0, 59, true)]
+        [DataRow(22, 23, 0, false)]
+        public void SmallerOrEqualTo_CompareToTimeAtTwelve_TrueIfSmallerOrEqualsFalseIfGreater(int hour, int minute,
+            int second, bool expectedResult)
+        {
+            var timeTested = new Time((byte)hour, (byte)minute, (byte)second);
+            var timeCompared = new Time(12, 0, 0);
+
+            var result = timeTested <= timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        #endregion
     }
 }
