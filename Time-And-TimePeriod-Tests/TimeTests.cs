@@ -1,0 +1,115 @@
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Time_And_TimePeriod_Lib;
+
+namespace Time_And_TimePeriod_Tests
+{
+    [TestClass]
+    public class TimeTests
+    {
+        #region Constructors
+
+        private void AssertTime(Time t, byte expectedHour, byte expectedMinute, byte expectedSecond)
+        {
+            Assert.AreEqual(t.Hours, expectedHour);
+            Assert.AreEqual(t.Minutes, expectedMinute);
+            Assert.AreEqual(t.Seconds, expectedSecond);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow(23, 59, 59)]
+        [DataRow(23, 0, 59)]
+        [DataRow(0, 0, 59)]
+        [DataRow(0, 0, 0)]
+        [DataRow(0, 59, 0)]
+        [DataRow(12, 23, 48)]
+        [DataRow(18,03, 2)]
+        [DataRow(22,21, 0)]
+        [DataRow(6,59, 53)]
+        public void Constructor_ThreeParams_CreateTimeObject(int hour, int minute, int second)
+        {
+            var time = new Time((byte) hour, (byte) minute, (byte) second);
+
+            AssertTime(time, (byte)hour, (byte)minute, (byte)second);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow(0, 0)]
+        [DataRow(23, 59)]
+        [DataRow(0, 59)]
+        [DataRow(23, 0)]
+        [DataRow(12, 05)]
+        [DataRow(05, 05)]
+        public void Constructor_TwoParams_CreateTimeObjectWithZeroSeconds(int hour, int minute)
+        {
+            var time = new Time((byte) hour, (byte) minute);
+
+            AssertTime(time, (byte) hour, (byte) minute, 0);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow(0)]
+        [DataRow(23)]
+        [DataRow(22)]
+        [DataRow(10)]
+        [DataRow(6)]
+        public void Constructor_OneParam_CreateTimeObjectWithZeroMinutesAndSecond(int hour)
+        {
+            var time = new Time((byte)hour);
+
+            AssertTime(time, (byte) hour, 0, 0);
+        }
+
+        [TestMethod, TestCategory("Constructors")]
+        public void Constructor_NoParams_CreateTimeObjectWithZeroHoursMinutesSeconds()
+        {
+            var time = new Time();
+
+            AssertTime(time, 0, 0,0);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow(24, 0, 0)]
+        [DataRow(-1, 23, 23)]
+        [DataRow(0, 60, 3)]
+        [DataRow(0, 59, 60)]
+        [DataRow(0, -1, 40)]
+        [DataRow(-2, -1, -10)]
+        [DataRow(2, 1, -10)]
+        [ExpectedException(typeof(FormatException))]
+        public void Constructor_InvalidHour_ThrowsFormatException(int hour, int minute, int second)
+        {
+            var time = new Time((byte) hour, (byte) minute, (byte) second);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow("00:00:00", 0, 0, 0)]
+        [DataRow("23:59:59", 23, 59, 59)]
+        [DataRow("23:59:00", 23, 59, 0)]
+        [DataRow("23:00:00", 23, 0, 0)]
+        [DataRow("12:00:00", 12, 0, 0)]
+        [DataRow("01:05:05", 1, 5, 5)]
+        public void Constructor_ValidStringFormat_CreateTimeObject(string input, int expectedHour, int expectedMinute,
+            int expectedSecond)
+        {
+            var time = new Time(input);
+
+            AssertTime(time, (byte) expectedHour, (byte) expectedMinute, (byte) expectedSecond);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow("24:00:00")]
+        [DataRow("24:1:10")]
+        [DataRow("-1:1:10")]
+        [DataRow("1:60:10")]
+        [DataRow("1:59:60")]
+        [DataRow("59:59:59")]
+        [ExpectedException(typeof(FormatException))]
+        public void Constructor_InvalidString_ThrowsFormatException(string input)
+        {
+            var time = new Time(input);
+        }
+
+        #endregion
+    }
+}
