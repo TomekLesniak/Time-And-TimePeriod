@@ -186,5 +186,53 @@ namespace Time_And_TimePeriod_Tests
         }
 
         #endregion
+
+        #region Equals
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_SameHour_True()
+        {
+            var timeOne = new Time(12, 0, 0);
+            var timeTwo = new Time(12, 0, 0);
+
+            var result = timeOne.Equals(timeTwo);
+
+            Assert.AreEqual(result, true);
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void Equals_OtherHour_False()
+        {
+            var timeOne = new Time(12, 30, 59);
+            var timeTwo = new Time(23, 12, 00);
+
+            var result = timeOne.Equals(timeTwo);
+
+            Assert.AreEqual(result, false);
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void StaticEquals_SameHour_True()
+        {
+            var timeOne = new Time(12, 30, 40);
+            var timeTwo = new Time(12, 30, 40);
+
+            var result = Time.Equals(timeOne, timeTwo);
+
+            Assert.AreEqual(result, true);
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void StaticEquals_OtherHour_False()
+        {
+            var timeOne = new Time(12, 30, 40);
+            var timeTwo = new Time(1, 0, 40);
+
+            var result = Time.Equals(timeOne, timeTwo);
+
+            Assert.AreEqual(result, false);
+        }
+
+        #endregion
     }
 }
