@@ -7,9 +7,14 @@ namespace Time_And_TimePeriod
     {
         static void Main(string[] args)
         {
-            var t = new Time("00:20:4");
-            var t2 = new Time("00:20:49");
-            Console.WriteLine(t.CompareTo(t2));
+            var t = new Time("00:20:50");
+            var t2 = new Time("00:20:50");
+            Console.WriteLine(t >= t2);
+
+            Console.WriteLine(t.Equals(null));
+            var x = Time.Equals(t, t2);
+            Console.WriteLine(x);
+            object.Equals(t, t2);
         }
     }
 }

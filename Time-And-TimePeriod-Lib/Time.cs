@@ -46,6 +46,8 @@ namespace Time_And_TimePeriod_Lib
         public bool Equals(Time other) => (Hours, Minutes, Seconds) == (other.Hours, other.Minutes, other.Seconds);
         public override int GetHashCode() => (Hours, Minutes, Seconds).GetHashCode();
         public override string ToString() => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
+        public override bool Equals(object obj) => obj is Time ? Equals((Time) obj) : false;
+        public static bool Equals(Time t1, Time t2) => t1.Equals(t2);
 
         public int CompareTo(Time other)
         {
@@ -55,5 +57,10 @@ namespace Time_And_TimePeriod_Lib
             if (minutesComparison != 0) return minutesComparison;
             return Seconds.CompareTo(other.Seconds);
         }
+
+        public static bool operator <(Time t1, Time t2) => t1.CompareTo(t2) < 0;
+        public static bool operator <=(Time t1, Time t2) => t1.CompareTo(t2) <= 0;
+        public static bool operator >(Time t1, Time t2) => t1.CompareTo(t2) > 0;
+        public static bool operator >=(Time t1, Time t2) => t1.CompareTo(t2) >= 0;
     } 
 }
