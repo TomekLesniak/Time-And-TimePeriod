@@ -7,9 +7,12 @@ namespace Time_And_TimePeriod
     {
         static void Main(string[] args)
         {
-            var t = new Time("00:20:50");
-            var t2 = new Time("00:20:0");
+            var t = new Time("06:59:50");
+            var t2 = new Time("06:10:00");
             Console.WriteLine(t == t2);
+
+            var test = new TimePeriod(t, t2);
+            Console.WriteLine(test);
         }
     }
 }

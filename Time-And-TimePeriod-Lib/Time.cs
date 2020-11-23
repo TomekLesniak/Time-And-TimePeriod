@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Time_And_TimePeriod_Lib
 {
-    public struct Time : IEquatable<Time>, IComparable<Time>
+    public readonly struct Time : IEquatable<Time>, IComparable<Time>
     {
         public byte Hours { get; }
         public byte Minutes { get; }
