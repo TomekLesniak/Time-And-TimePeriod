@@ -8,8 +8,10 @@ namespace Time_And_TimePeriod
         static void Main(string[] args)
         {
             var time = new Time("02:10:00");
-            var test2 = new TimePeriod("03:05:59");
-            Console.WriteLine(time - test2);
+            var time2 = new Time("02:00:00");
+
+            var x = new TimePeriod(time2, time);
+            Console.WriteLine(x);
         }
     }
 }

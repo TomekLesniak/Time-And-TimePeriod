@@ -47,6 +47,8 @@ namespace Time_And_TimePeriod_Lib
             int hours, minutes, seconds;
             try
             {
+                // I assumed that it is not required to write additional 0 in timePeriod input between(0-9),
+                // so input like 12:1:30 is valid whilst still will be printed as :01:
                 var split = timePeriod.Split(':');
                 hours = int.Parse(split[0]);
                 minutes = int.Parse(split[1]);

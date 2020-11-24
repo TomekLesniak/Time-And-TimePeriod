@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Time_And_TimePeriod_Lib;
 
-namespace Time_And_TimePeriod_Tests
+namespace Time_And_TimePeriod_Tests.Time_Tests
 {
     [TestClass]
     public class TimeTests
@@ -134,6 +134,7 @@ namespace Time_And_TimePeriod_Tests
             // OverflowException as byte can`t convert negative number
             var time = new Time(input);
         }
+
 
         #endregion
 
