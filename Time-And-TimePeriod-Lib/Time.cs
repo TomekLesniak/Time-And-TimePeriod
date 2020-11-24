@@ -69,5 +69,60 @@ namespace Time_And_TimePeriod_Lib
             if (minutesComparison != 0) return minutesComparison;
             return Seconds.CompareTo(other.Seconds);
         }
+
+        public static Time operator +(Time time, TimePeriod timePeriod) => Plus(time, timePeriod);
+        public static Time operator -(Time time, TimePeriod timePeriod) => Minus(time, timePeriod);
+
+        public Time Plus(TimePeriod timePeriod) => Plus(this, timePeriod);
+
+        public static Time Plus(Time time, TimePeriod timePeriod)
+        {
+            var hours = time.Hours + timePeriod.Hours;
+            var minutes = time.Minutes + timePeriod.Minutes;
+            var seconds = time.Seconds + timePeriod.Seconds;
+
+            if (seconds >= 60)
+            {
+                seconds %= 60;
+                minutes++;
+            }
+
+            if (minutes >= 60)
+            {
+                minutes %= 60;
+                hours++;
+            }
+
+            hours %= 24;
+            return new Time((byte)hours, (byte)minutes, (byte)seconds);
+        }
+
+        public Time Minus(TimePeriod timePeriod) => Minus(this, timePeriod);
+
+        public static Time Minus(Time time, TimePeriod timePeriod)
+        {
+            var hours = (time.Hours - timePeriod.Hours) % 24;
+            var minutes = time.Minutes - timePeriod.Minutes;
+            var seconds = time.Seconds - timePeriod.Seconds;
+
+            while (seconds < 0)
+            {
+                seconds += 60;
+                minutes--;
+            }
+
+            while (minutes < 0)
+            {
+                minutes += 60;
+                hours--;
+            }
+
+            if (hours < 0)
+                hours += 24;
+
+            return new Time((byte)hours, (byte)minutes, (byte)seconds);
+        }
+
+
     } 
 }

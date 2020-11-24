@@ -7,13 +7,9 @@ namespace Time_And_TimePeriod
     {
         static void Main(string[] args)
         {
-            var t = new Time("-1:59:50");
-            var t2 = new Time("06:10:00");
-            Console.WriteLine(t == t2);
-
-            var test = new TimePeriod("23:00:00");
-            var test2 = new TimePeriod("00:59:59");
-            Console.WriteLine(test2 - test);
+            var time = new Time("02:10:00");
+            var test2 = new TimePeriod("03:05:59");
+            Console.WriteLine(time - test2);
         }
     }
 }

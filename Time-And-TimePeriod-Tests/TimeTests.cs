@@ -140,6 +140,38 @@ namespace Time_And_TimePeriod_Tests
         #region Operators
 
         [DataTestMethod, TestCategory("Operators")]
+        [DataRow(12, 0, 0, true)]
+        [DataRow(12, 12, 12, false)]
+        [DataRow(12, 0, 19, false)]
+        [DataRow(0, 0, 0, false)]
+        public void Equality_CompareToTimeAtTwelve_TrueIfSameFalseIfOther(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new Time((byte)hour, (byte)minute, (byte)second);
+            var timeCompared = new Time(12, 0, 0);
+
+            var result = timeTested == timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(12, 0, 0, false)]
+        [DataRow(12, 12, 12, true)]
+        [DataRow(12, 0, 19, true)]
+        [DataRow(0, 0, 0, true)]
+        public void EqualityNegation_CompareToTimeAtTwelve_TrueIfOtherFalseIfSame(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new Time((byte)hour, (byte)minute, (byte)second);
+            var timeCompared = new Time(12, 0, 0);
+
+            var result = timeTested != timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
         [DataRow(0, 0, 0, false)]
         [DataRow(12, 0, 0, false)]
         [DataRow(12, 0, 1, true)]
@@ -210,6 +242,42 @@ namespace Time_And_TimePeriod_Tests
             Assert.AreEqual(result, expectedResult);
         }
 
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow("12:00:00", "01:00:00", "13:00:00")]
+        [DataRow("12:00:00", "12:00:00", "00:00:00")]
+        [DataRow("12:00:00", "24:12:12", "12:12:12")]
+        [DataRow("12:00:00", "72:00:00", "12:00:00")]
+        [DataRow("12:00:00", "15:59:59", "03:59:59")]
+        [DataRow("12:59:59", "00:00:2", "13:00:01")]
+        [DataRow("15:30:00", "02:35:30", "18:05:30")]
+        public void PlusSign_AddTimePeriodToTime_ReturnsCalculatedTime(string timeInput, string period, string expectedResult)
+        {
+            var time = new Time(timeInput);
+            var timePeriod = new TimePeriod(period);
+
+            var result = time + timePeriod;
+
+            Assert.AreEqual(result.ToString(), expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow("12:00:00", "01:00:00", "11:00:00")]
+        [DataRow("12:00:00", "12:00:00", "00:00:00")]
+        [DataRow("12:00:00", "24:12:12", "11:47:48")]
+        [DataRow("12:00:00", "72:00:00", "12:00:00")]
+        [DataRow("12:00:00", "15:59:59", "20:00:01")]
+        [DataRow("00:00:01", "00:00:02", "23:59:59")]
+        [DataRow("15:30:00", "02:35:30", "12:54:30")]
+        public void MinusSign_SubtractTimePeriodFromTime_ReturnsCalculatedTime(string timeInput, string period, string expectedResult)
+        {
+            var time = new Time(timeInput);
+            var timePeriod = new TimePeriod(period);
+
+            var result = time - timePeriod;
+
+            Assert.AreEqual(result.ToString(), expectedResult);
+        }
+
         #endregion
 
         #region Equals
@@ -256,6 +324,64 @@ namespace Time_And_TimePeriod_Tests
             var result = Time.Equals(timeOne, timeTwo);
 
             Assert.AreEqual(result, false);
+        }
+
+        #endregion
+
+        #region ArithmeticOperations
+
+        [DataTestMethod, TestCategory("ArithmeticOperations")]
+        [DataRow("12:00:00", "01:00:00", "13:00:00")]
+        [DataRow("12:00:00", "12:00:00", "00:00:00")]
+        [DataRow("12:00:00", "24:12:12", "12:12:12")]
+        [DataRow("12:00:00", "72:00:00", "12:00:00")]
+        [DataRow("12:00:00", "15:59:59", "03:59:59")]
+        [DataRow("12:59:59", "00:00:2", "13:00:01")]
+        [DataRow("15:30:00", "02:35:30", "18:05:30")]
+        public void Plus_AddTimePeriodToTime_ReturnsCalculatedTime(string timeInput, string period, string expectedResult)
+        {
+            var time = new Time(timeInput);
+            var timePeriod = new TimePeriod(period);
+
+            var result = time.Plus(timePeriod);
+
+            Assert.AreEqual(result.ToString(), expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("ArithmeticOperations")]
+        [DataRow("12:00:00", "01:00:00", "11:00:00")]
+        [DataRow("12:00:00", "12:00:00", "00:00:00")]
+        [DataRow("12:00:00", "24:12:12", "11:47:48")]
+        [DataRow("12:00:00", "72:00:00", "12:00:00")]
+        [DataRow("12:00:00", "15:59:59", "20:00:01")]
+        [DataRow("00:00:01", "00:00:02", "23:59:59")]
+        [DataRow("15:30:00", "02:35:30", "12:54:30")]
+        public void Minus_SubtractTimePeriodFromTime_ReturnsCalculatedTime(string timeInput, string period, string expectedResult)
+        {
+            var time = new Time(timeInput);
+            var timePeriod = new TimePeriod(period);
+
+            var result = time.Minus(timePeriod);
+
+            Assert.AreEqual(result.ToString(), expectedResult);
+        }
+
+        #endregion
+
+        #region ToString
+
+        [DataTestMethod]
+        [DataRow(1, 1, 1, "01:01:01")]
+        [DataRow(12, 0, 0, "12:00:00")]
+        [DataRow(23, 59, 0, "23:59:00")]
+        [DataRow(0, 0, 0, "00:00:00")]
+        [DataRow(15, 59, 59, "15:59:59")]
+        public void ToString_DifferentValues_AlwaysReturnStringInSameFormat(int hour, int minute, int second,
+            string expectedStringRepresentation)
+        {
+            var time = new Time((byte)hour, (byte)minute, (byte)second);
+
+            Assert.AreEqual(time.ToString(), expectedStringRepresentation);
         }
 
         #endregion
