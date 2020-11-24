@@ -98,15 +98,40 @@ namespace Time_And_TimePeriod_Tests
         }
 
         [DataTestMethod, TestCategory("Constructors")]
-        [DataRow("24:00:00")]
-        [DataRow("24:1:10")]
-        [DataRow("-1:1:10")]
-        [DataRow("1:60:10")]
-        [DataRow("1:59:60")]
-        [DataRow("59:59:59")]
+        [DataRow("0;0;0")]
+        [DataRow("241;10")]
+        [DataRow("1:10;12")]
+        [DataRow("0:10;13")]
+        [DataRow("1:59")]
+        [DataRow("59")]
         [ExpectedException(typeof(FormatException))]
         public void Constructor_InvalidString_ThrowsFormatException(string input)
         {
+            var time = new Time(input);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow("24:00:00")]
+        [DataRow("24:1:10")]
+        [DataRow("1:60:10")]
+        [DataRow("1:59:60")]
+        [DataRow("59:59:59")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Constructor_ValidStringInvalidNonNegativeData_ThrowsArgumentOutOfRangeException(string input)
+        {
+            var time = new Time(input);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow("-54:00:00")]
+        [DataRow("23:-1:10")]
+        [DataRow("1:60:-10")]
+        [DataRow("-1:-59:-50")]
+        [DataRow("9:-59:59")]
+        [ExpectedException(typeof(OverflowException))]
+        public void Constructor_ValidStringNegativeData_ThrowsArgumentOutOfRangeException(string input)
+        {
+            // OverflowException as byte can`t convert negative number
             var time = new Time(input);
         }
 

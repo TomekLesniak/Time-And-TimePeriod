@@ -30,13 +30,17 @@ namespace Time_And_TimePeriod_Lib
                 minutes = byte.Parse(split[1]);
                 seconds = byte.Parse(split[2]);
             }
+            catch (OverflowException)
+            {
+                throw new OverflowException();
+            }
             catch
             {
                 throw new FormatException("Invalid string representation of Time");
             }
 
             if (hours >= 24 || minutes >= 60 || seconds >= 60)
-                throw new FormatException("Invalid time format");
+                throw new ArgumentOutOfRangeException();
 
             Hours = hours;
             Minutes = minutes;
