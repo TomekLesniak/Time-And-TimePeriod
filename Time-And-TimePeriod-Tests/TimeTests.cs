@@ -208,7 +208,7 @@ namespace Time_And_TimePeriod_Tests.Time_Tests
         }
 
 
-        [DataTestMethod]
+        [DataTestMethod, TestCategory("Operators")]
         [DataRow(0, 0, 0, true)]
         [DataRow(12, 0, 0, false)]
         [DataRow(12, 0, 1, false)]

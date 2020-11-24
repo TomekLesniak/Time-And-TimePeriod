@@ -146,5 +146,221 @@ namespace Time_And_TimePeriod_Tests.TimePeriod_Tests
         }
 
         #endregion
+
+        #region Equals
+
+        [DataTestMethod, TestCategory("Equals")]
+        [DataRow(100, 200, false)]
+        [DataRow(100, 10, false)]
+        [DataRow(100, 1000, false)]
+        [DataRow(100, 100, true)]
+        [DataRow(250, 250, true)]
+        public void Equals_TwoTimePeriods_TrueIfSameAmountOfSecondsFalseOtherwise(long secondsOne, long secondsTwo, bool expectedResult)
+        {
+            var timePeriodOne = new TimePeriod(secondsOne);
+            var timePeriodTwo = new TimePeriod(secondsTwo);
+
+            var result = timePeriodOne.Equals(timePeriodTwo);
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void StaticEquals_SameAmountOfSeconds_ReturnTrue()
+        {
+            var timeOne = new TimePeriod(120, 30, 40);
+            var timeTwo = new TimePeriod(120, 30, 40);
+
+            var result = TimePeriod.Equals(timeOne, timeTwo);
+
+            Assert.AreEqual(result, true);
+        }
+
+        [TestMethod, TestCategory("Equals")]
+        public void StaticEquals_OtherAmountOfSeconds_ReturnFalse()
+        {
+            var timeOne = new TimePeriod(120, 30, 40);
+            var timeTwo = new TimePeriod(1, 0, 40);
+
+            var result = TimePeriod.Equals(timeOne, timeTwo);
+
+            Assert.AreEqual(result, false);
+        }
+        #endregion
+
+        #region Operators
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(24, 0, 0, true)]
+        [DataRow(24, 12, 12, false)]
+        [DataRow(24, 0, 19, false)]
+        [DataRow(0, 0, 0, false)]
+        public void Equality_CompareToTimePeriodEqualsTwentyFourHours_TrueIfSameFalseIfOther(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new TimePeriod(hour, minute, second);
+            var timeCompared = new TimePeriod(24, 0, 0);
+
+            var result = timeTested == timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(24, 0, 0, false)]
+        [DataRow(24, 12, 12, true)]
+        [DataRow(24, 0, 19, true)]
+        [DataRow(0, 0, 0, true)]
+        public void EqualityNegation_CompareToTimePeriodEqualsTwentyFourHours_TrueIfOtherFalseIfSame(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new TimePeriod(hour, minute, second);
+            var timeCompared = new TimePeriod(24, 0, 0);
+
+            var result = timeTested != timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(0, 0, 0, false)]
+        [DataRow(24, 0, 0, false)]
+        [DataRow(24, 0, 1, true)]
+        [DataRow(23, 59, 59, false)]
+        [DataRow(36, 12, 12, true)]
+        public void GreaterThen_CompareToTimePeriodEqualsTwentyFourHours_TrueIfGreaterFalseIfLessOrEqual(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new TimePeriod(hour, minute, second);
+            var timeCompared = new TimePeriod(24, 0, 0);
+
+            var result = timeTested > timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(24, 0, 0, true)]
+        [DataRow(24, 0, 1, true)]
+        [DataRow(23, 59, 59, false)]
+        [DataRow(22, 0, 59, false)]
+        [DataRow(24, 23, 0, true)]
+        public void GreaterOrEqualTo_CompareToTimePeriodEqualsTwentyFourHours_TrueIfGreaterOrEqualFalseIfLess(int hour, int minute,
+            int second, bool expectedResult)
+        {
+            var timeTested = new TimePeriod(hour, minute, second);
+            var timeCompared = new TimePeriod(24, 0, 0);
+
+            var result = timeTested >= timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(0, 0, 0, true)]
+        [DataRow(24, 0, 0, false)]
+        [DataRow(24, 0, 1, false)]
+        [DataRow(23, 59, 59, true)]
+        [DataRow(74, 12, 12, false)]
+        public void LessThen_CompareToTimePeriodEqualsTwentyFourHours_TrueIfSmallerFalseIfGreaterOrEqual(int hour, int minute, int second,
+            bool expectedResult)
+        {
+            var timeTested = new TimePeriod(hour, minute, second);
+            var timeCompared = new TimePeriod(24, 0, 0);
+
+            var result = timeTested < timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow(24, 0, 0, true)]
+        [DataRow(24, 0, 1, false)]
+        [DataRow(23, 59, 59, true)]
+        [DataRow(0, 0, 59, true)]
+        [DataRow(77, 23, 0, false)]
+        public void SmallerOrEqualTo_CompareToTimePeriodEqualsTwentyFourHours_TrueIfSmallerOrEqualsFalseIfGreater(int hour, int minute,
+            int second, bool expectedResult)
+        {
+            var timeTested = new TimePeriod(hour, minute, second);
+            var timeCompared = new TimePeriod(24, 0, 0);
+
+            var result = timeTested <= timeCompared;
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow("12:00:00", "01:00:00", "13:00:00")]
+        [DataRow("12:00:00", "12:00:00", "24:00:00")]
+        [DataRow("12:00:00", "24:12:12", "36:12:12")]
+        [DataRow("12:00:00", "72:00:00", "84:00:00")]
+        [DataRow("12:00:00", "15:59:59", "27:59:59")]
+        [DataRow("12:59:59", "00:00:2", "13:00:01")]
+        [DataRow("15:30:00", "02:35:30", "18:05:30")]
+        public void PlusSign_AddTwoTimePeriods_ReturnsSumOfTwoTimePeriod(string left, string right, string expectedResult)
+        {
+            var timePeriodLeft = new TimePeriod(left);
+            var timePeriodRight = new TimePeriod(right);
+
+            var result = timePeriodLeft + timePeriodRight;
+
+            Assert.AreEqual(result.ToString(), expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow("12:00:00", "01:00:00", "11:00:00")]
+        [DataRow("12:00:00", "12:00:00", "00:00:00")]
+        [DataRow("24:12:12", "12:00:00", "12:12:12")]
+        [DataRow("72:00:00", "12:00:00", "60:00:00")]
+        [DataRow("50:00:00", "15:59:59", "34:00:01")]
+        [DataRow("00:00:03", "00:00:02", "00:00:01")]
+        [DataRow("15:30:00", "02:35:30", "12:54:30")]
+        public void MinusSign_SubtractTwoTimePeriods_ReturnsSubtractedTimePeriod(string left, string right, string expectedResult)
+        {
+            var timePeriodOne = new TimePeriod(left);
+            var timePeriodTwo = new TimePeriod(right);
+
+            var result = timePeriodOne - timePeriodTwo;
+
+            Assert.AreEqual(result.ToString(), expectedResult);
+        }
+
+        [DataTestMethod, TestCategory("Operators")]
+        [DataRow("12:00:00", "31:00:00")]
+        [DataRow("12:00:00", "122:00:00")]
+        [DataRow("24:12:12", "24:13:00")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void MinusSign_SubtractSmallerTimePeriodFromBigger_ThrowsArgumentOutOfRangeException(string left, string right)
+        {
+            var timePeriodOne = new TimePeriod(left);
+            var timePeriodTwo = new TimePeriod(right);
+
+            var result = timePeriodOne - timePeriodTwo;
+        }
+
+        #endregion
+
+        #region ToString
+
+        [DataTestMethod, TestCategory("ToString")]
+        [DataRow("23:01:09", "23:01:09")]
+        [DataRow("55:01:09", "55:01:09")]
+        [DataRow("55:59:09", "55:59:09")]
+        [DataRow("55:59:9", "55:59:09")]
+        [DataRow("01:01:01", "01:01:01")]
+        [DataRow("123:01:01", "123:01:01")]
+        public void ToString_DifferentValues_ReturnsCorrectStringRepresentation(string input,
+            string expectedResult)
+        {
+            var timePeriod = new TimePeriod(input);
+
+            Assert.AreEqual(timePeriod.ToString(), expectedResult);
+        }
+
+        #endregion
     }
 }

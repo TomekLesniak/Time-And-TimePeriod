@@ -94,11 +94,6 @@ namespace Time_And_TimePeriod_Lib
         public static TimePeriod Plus(TimePeriod first, TimePeriod second)
         {
             long secondsOfTwoTimePeriods = first._seconds + second._seconds;
-            const long secondsPerDay = 86400;
-            while (secondsOfTwoTimePeriods >= secondsPerDay)
-            {
-                secondsOfTwoTimePeriods -= secondsPerDay;
-            }
             return new TimePeriod(secondsOfTwoTimePeriods);
         }
 
@@ -107,11 +102,6 @@ namespace Time_And_TimePeriod_Lib
         public static TimePeriod Minus(TimePeriod first, TimePeriod second)
         {
             long secondsBetweenTwoTimePeriods = first._seconds - second._seconds;
-            while (secondsBetweenTwoTimePeriods < 0)
-            {
-                const long secondsPerDay = 86400;
-                secondsBetweenTwoTimePeriods += secondsPerDay;
-            }
             return new TimePeriod(secondsBetweenTwoTimePeriods);
         }
 
