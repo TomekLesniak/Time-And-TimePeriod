@@ -7,6 +7,8 @@ namespace Time_And_TimePeriod
     {
         static void Main(string[] args)
         {
+            var x = new Time();
+
             Console.WriteLine("\n======== Time ========");
             var timeOneParam = new Time(12);
             var timeTwoParams = new Time(23, 59);
@@ -56,7 +58,6 @@ namespace Time_And_TimePeriod
             Console.WriteLine($"{timePeriodLonger} <= {timePeriodShorter} : {timePeriodLonger <= timePeriodShorter}");
             Console.WriteLine($"{timePeriodLonger} == {timePeriodShorter} : {timePeriodLonger == timePeriodShorter}");
             Console.WriteLine($"{timePeriodLonger} != {timePeriodShorter} : {timePeriodLonger != timePeriodShorter}");
-
 
             Console.WriteLine($"\n{timePeriodLonger} + {timePeriodShorter} = {timePeriodLonger + timePeriodShorter}");
             Console.WriteLine($"{timePeriodLonger} - {timePeriodShorter} = {timePeriodLonger - timePeriodShorter}");
