@@ -7,16 +7,17 @@ namespace Time_And_TimePeriod
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("\n\tAplikacja konsolowa przedstawiająca poprawność zaimplementowanych typów\n");
             Console.WriteLine("\n======== Time ========");
             var timeOneParam = new Time(12);
             var timeTwoParams = new Time(23, 59);
             var timeThreeParams = new Time(6, 12, 59);
             var timeString = new Time("15:05:29");
 
-            Console.WriteLine(timeOneParam);
-            Console.WriteLine(timeTwoParams);
-            Console.WriteLine(timeThreeParams);
-            Console.WriteLine(timeString);
+            Console.WriteLine($"Konstruktor jeden argument (12): {timeOneParam}");
+            Console.WriteLine($"Konstruktor dwa argumenty (23,59): {timeTwoParams}");
+            Console.WriteLine($"Konstruktor trzy argumenty (6,12,59): {timeThreeParams}");
+            Console.WriteLine($"Konstruktor string (15:05:29): {timeString}");
 
             var timeLater = new Time(20);
             var timeEarlier = new Time(10, 30);
@@ -41,11 +42,11 @@ namespace Time_And_TimePeriod
             var timePeriodTwoTimeObjects = new TimePeriod(timeEarlier, timeLater);
             var timePeriodString = new TimePeriod("24:24:24");
 
-            Console.WriteLine(timePeriodOneParam);
-            Console.WriteLine(timePeriodTwoParams);
-            Console.WriteLine(timePeriodThreeParams);
-            Console.WriteLine(timePeriodTwoTimeObjects);
-            Console.WriteLine(timePeriodString);
+            Console.WriteLine($"Konstruktor jeden argument (600): {timePeriodOneParam}");
+            Console.WriteLine($"Konstruktor dwa argumenty (24, 30): {timePeriodTwoParams}");
+            Console.WriteLine($"Konstruktor trzy argumenty (30, 20, 10): {timePeriodThreeParams}");
+            Console.WriteLine($"Konstruktor string (24:24:24): {timePeriodString}");
+            Console.WriteLine($"Konstruktor dwa obiekty Time(10,30,0) (20,0,0) : {timePeriodTwoTimeObjects}");
 
             var timePeriodLonger = new TimePeriod(86400);
             var timePeriodShorter = new TimePeriod(35000);
