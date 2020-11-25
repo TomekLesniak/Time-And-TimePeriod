@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Time_And_TimePeriod_Lib;
 
@@ -293,7 +291,13 @@ namespace Time_And_TimePeriod_Tests.TimePeriod_Tests
             Assert.AreEqual(result, expectedResult);
         }
 
-        [DataTestMethod, TestCategory("Operators")]
+
+
+        #endregion
+
+        #region ArithmeticOperations
+
+        [DataTestMethod, TestCategory("ArithmeticOperations")]
         [DataRow("12:00:00", "01:00:00", "13:00:00")]
         [DataRow("12:00:00", "12:00:00", "24:00:00")]
         [DataRow("12:00:00", "24:12:12", "36:12:12")]
@@ -311,7 +315,7 @@ namespace Time_And_TimePeriod_Tests.TimePeriod_Tests
             Assert.AreEqual(result.ToString(), expectedResult);
         }
 
-        [DataTestMethod, TestCategory("Operators")]
+        [DataTestMethod, TestCategory("ArithmeticOperations")]
         [DataRow("12:00:00", "01:00:00", "11:00:00")]
         [DataRow("12:00:00", "12:00:00", "00:00:00")]
         [DataRow("24:12:12", "12:00:00", "12:12:12")]
@@ -329,7 +333,7 @@ namespace Time_And_TimePeriod_Tests.TimePeriod_Tests
             Assert.AreEqual(result.ToString(), expectedResult);
         }
 
-        [DataTestMethod, TestCategory("Operators")]
+        [DataTestMethod, TestCategory("ArithmeticOperations")]
         [DataRow("12:00:00", "31:00:00")]
         [DataRow("12:00:00", "122:00:00")]
         [DataRow("24:12:12", "24:13:00")]
@@ -340,6 +344,65 @@ namespace Time_And_TimePeriod_Tests.TimePeriod_Tests
             var timePeriodTwo = new TimePeriod(right);
 
             var result = timePeriodOne - timePeriodTwo;
+        }
+
+        [DataTestMethod, TestCategory("ArithmeticOperations")]
+        [DataRow("03:00:00", 2, "06:00:00")]
+        [DataRow("03:00:00", 3, "09:00:00")]
+        [DataRow("03:00:00", 1, "03:00:00")]
+        [DataRow("03:30:00", 2, "07:00:00")]
+        [DataRow("03:59:59", 2, "07:59:58")]
+        public void Multiply_TimePeriodByInteger_ReturnsTimePeriodMultipliedByInteger(string timePeriodInput, int multiplier,
+            string expectedResult)
+        {
+            var timePeriod = new TimePeriod(timePeriodInput);
+
+            var multiplied = timePeriod * multiplier;
+
+            Assert.AreEqual(expectedResult, multiplied.ToString());
+        }
+
+        [TestMethod, TestCategory("ArithmeticOperations")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Multiply_ByNegative_ThrowsArgumentOutOfRangeException()
+        {
+            var timePeriod = new TimePeriod(120);
+
+            var result = timePeriod * -1;
+        }
+
+        [DataTestMethod, TestCategory("ArithmeticOperations")]
+        [DataRow("01:00:00", 2, "00:30:00")]
+        [DataRow("01:00:00", 1, "01:00:00")]
+        [DataRow("12:00:00", 2, "06:00:00")]
+        [DataRow("20:30:50", 2, "10:15:25")]
+        [DataRow("20:20:20", 4, "05:05:05")]
+        public void Divide_TimePeriodByInteger_ReturnsTimePeriodDividedByInteger(string timePeriodInput, int divider,
+            string expectedResult)
+        {
+            var timePeriod = new TimePeriod(timePeriodInput);
+
+            var divided = timePeriod / divider;
+
+            Assert.AreEqual(expectedResult, divided.ToString());
+        }
+
+        [TestMethod, TestCategory("ArithmeticOperations")]
+        [ExpectedException(typeof(DivideByZeroException))]
+        public void Divide_ByZero_ThrowsDivideByZeroException()
+        {
+            var timePeriod = new TimePeriod(300);
+
+            var result = timePeriod / 0;
+        }
+
+        [TestMethod, TestCategory("ArithmeticOperations")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Divide_ByNegative_ThrowsArgumentOutOfRangeException()
+        {
+            var timePeriod = new TimePeriod(120);
+
+            var result = timePeriod / -1;
         }
 
         #endregion

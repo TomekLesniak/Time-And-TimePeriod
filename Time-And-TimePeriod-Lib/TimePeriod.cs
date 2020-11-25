@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Time_And_TimePeriod_Lib
 {
