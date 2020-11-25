@@ -134,7 +134,7 @@ namespace Time_And_TimePeriod_Lib
 
         /// <summary>
         /// Compare two objects and determine which one is greater.
-        /// Greater is always the one with bigger values, starting from hour, then minutes,
+        /// Greater is the one with bigger values, starting from hour, then minutes,
         /// then seconds.
         /// </summary>
         /// <param name="other">Time object this object is compared to</param>
