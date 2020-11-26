@@ -23,6 +23,9 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         /// </summary>
         public byte Seconds { get; }
 
+        /// <summary>
+        /// Get the millisecond of the time represented by that instance
+        /// </summary>
         public int Milliseconds { get; }
 
         /// <summary>

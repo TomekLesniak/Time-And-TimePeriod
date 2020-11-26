@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Time_And_TimePeriod_Milliseconds_Lib
@@ -26,14 +27,16 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         /// </summary>
         public int Seconds => (int) (_seconds - Minutes * 60 - Hours * 3600);
 
-        public int Milliseconds => (int)(Math.Round(_seconds - (int)_seconds, 4) * 1000);
+        public int Milliseconds => (int)(Math.Round(_seconds - (int)_seconds, 3) * 1000);
 
         /// <summary>
         /// Initializes a new instance of TimePeriod struct.
         /// </summary>
-        /// <param name="seconds">Amount of seconds comma milliseconds</param>
+        /// <param name="seconds">Amount of seconds dot milliseconds</param>
         public TimePeriod(double seconds)
         {
+            seconds = Math.Round(seconds, 4);
+            //var milliseconds = Math.Round(seconds - (int) seconds, 5);
             if (seconds < 0)
                 throw new ArgumentOutOfRangeException();
 
@@ -93,6 +96,9 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
                 // I assumed that it is not required to write additional 0 in timePeriod input between(0-9),
                 // so input like 12:1:30.999 is valid whilst still will be printed as :01:
                 var split = timePeriod.Split(':');
+                if(split.Length != 3)
+                    throw new FormatException();
+
                 hours = int.Parse(split[0]);
                 minutes = int.Parse(split[1]);
                 seconds = double.Parse(split[2]);
@@ -101,7 +107,6 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
             {
                 throw new FormatException("Invalid TimePeriod format");
             }
-
             if (hours < 0 || minutes < 0 || seconds < 0.0 || minutes >= 60 || seconds >= 60.0)
                 throw new ArgumentOutOfRangeException();
 
@@ -120,7 +125,7 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         /// </summary>
         /// <param name="other">TimePeriod instance</param>
         /// <returns>True if both interval are the same, false otherwise</returns>
-        public bool Equals(TimePeriod other) => Math.Abs(_seconds - other._seconds) < 0.001;
+        public bool Equals(TimePeriod other) => Math.Abs(_seconds - other._seconds) < 0.0001;
         public override bool Equals(object obj) => obj is TimePeriod other && Equals(other);
         public override int GetHashCode() => _seconds.GetHashCode();
 
@@ -227,6 +232,10 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         public static TimePeriod Minus(TimePeriod first, TimePeriod second)
         {
             var secondsBetweenTwoTimePeriods = first._seconds - second._seconds;
+            //if (secondsBetweenTwoTimePeriods - (int)secondsBetweenTwoTimePeriods >= 0.1000)
+            //{
+            //    secondsBetweenTwoTimePeriods-= 0.1000;
+            //}
             return new TimePeriod(secondsBetweenTwoTimePeriods);
         }
 
