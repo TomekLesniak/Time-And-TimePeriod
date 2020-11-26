@@ -11,10 +11,13 @@ namespace Time_And_TimePeriod
             var timeWithMs = new ms.Time(12, 30, 10, 999);
             Console.WriteLine(timeWithMs);
             var timemsString = new ms.Time("12:30:10.900");
-            Console.WriteLine(timemsString);
+            var timemsString2 = new ms.Time("12:30:11.999");
 
-            var s = new ms.TimePeriod(2.920);
+            var s = new ms.TimePeriod(timemsString, timemsString2);
+
             Console.WriteLine(s);
+            Console.WriteLine(s * 2);
+            Console.WriteLine(s/2);
 
 
 

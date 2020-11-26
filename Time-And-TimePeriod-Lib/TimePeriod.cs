@@ -243,7 +243,7 @@ namespace Time_And_TimePeriod_Lib.Basic
         /// <summary>
         /// Divide given time period by integer value
         /// </summary>
-        /// <returns></returns>
+        /// <returns>New calculated time period instance</returns>
         public TimePeriod Divide(int divider) => Divide(this, divider);
 
         /// <summary>

@@ -194,6 +194,13 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
             var hours = time.Hours + timePeriod.Hours;
             var minutes = time.Minutes + timePeriod.Minutes;
             var seconds = time.Seconds + timePeriod.Seconds;
+            var milliseconds = time.Milliseconds + timePeriod.Milliseconds;
+
+            if (milliseconds >= 1000)
+            {
+                milliseconds %= 1000;
+                seconds++;
+            }
 
             if (seconds >= 60)
             {
@@ -208,7 +215,7 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
             }
 
             hours %= 24;
-            return new Time((byte)hours, (byte)minutes, (byte)seconds);
+            return new Time((byte)hours, (byte)minutes, (byte)seconds, milliseconds);
         }
 
         /// <summary>
@@ -229,6 +236,13 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
             var hours = (time.Hours - timePeriod.Hours) % 24;
             var minutes = time.Minutes - timePeriod.Minutes;
             var seconds = time.Seconds - timePeriod.Seconds;
+            var milliseconds = time.Milliseconds - timePeriod.Milliseconds;
+
+            while (milliseconds < 0)
+            {
+                milliseconds += 1000;
+                seconds--;
+            }
 
             while (seconds < 0)
             {
@@ -245,7 +259,7 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
             if (hours < 0)
                 hours += 24;
 
-            return new Time((byte)hours, (byte)minutes, (byte)seconds);
+            return new Time((byte)hours, (byte)minutes, (byte)seconds, milliseconds);
         }
 
     }
