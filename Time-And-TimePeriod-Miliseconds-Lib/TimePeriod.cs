@@ -27,6 +27,9 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         /// </summary>
         public int Seconds => (int) (_seconds - Minutes * 60 - Hours * 3600);
 
+        /// <summary>
+        /// Amount of milliseconds interval represented by this instance
+        /// </summary>
         public int Milliseconds => (int)(Math.Round(_seconds - (int)_seconds, 3) * 1000);
 
         /// <summary>
@@ -232,10 +235,6 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         public static TimePeriod Minus(TimePeriod first, TimePeriod second)
         {
             var secondsBetweenTwoTimePeriods = first._seconds - second._seconds;
-            //if (secondsBetweenTwoTimePeriods - (int)secondsBetweenTwoTimePeriods >= 0.1000)
-            //{
-            //    secondsBetweenTwoTimePeriods-= 0.1000;
-            //}
             return new TimePeriod(secondsBetweenTwoTimePeriods);
         }
 

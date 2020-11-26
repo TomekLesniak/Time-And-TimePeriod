@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Time_And_TimePeriod_Milliseconds_Lib;
 
@@ -7,6 +9,7 @@ namespace Time_And_TimePeriod_MilliSeconds_Tests
     [TestClass]
     public class TimePeriodTests
     {
+
         #region Constructors
 
         private void AssertTimePeriod(TimePeriod timePeriod, int expectedHours, int expectedMinutes,

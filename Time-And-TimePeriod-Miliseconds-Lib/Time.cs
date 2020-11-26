@@ -34,6 +34,7 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         /// <param name="hours">Hour (0-23)</param>
         /// <param name="minutes">Minutes (0-59)</param>
         /// <param name="seconds">Seconds (0-59)</param>
+        /// <param name="milliseconds">Milliseconds(0-999)</param>
         public Time(byte hours = 0, byte minutes = 0, byte seconds = 0, int milliseconds = 0)
         {
             if (hours >= 24 || minutes >= 60 || seconds >= 60 || milliseconds < 0 || milliseconds >= 1000)
@@ -48,7 +49,7 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
         /// <summary>
         /// Initializes a new instance of Time struct
         /// </summary>
-        /// <param name="time">Time representation formatted in hh:mm:ss.mmm</param>
+        /// <param name="time">Time representation formatted in hh:mm:ss.fff</param>
         /// <example>12:1:23.999 is valid format as well</example>
         public Time(string time)
         {
