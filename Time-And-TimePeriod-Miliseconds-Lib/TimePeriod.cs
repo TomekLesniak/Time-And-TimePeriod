@@ -7,6 +7,7 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
 {
     /// <summary>
     /// <c>TimePeriod</c> represents time interval between two 'points' of time
+    /// Supports milliseconds
     /// </summary>
     public readonly struct TimePeriod //: IEquatable<TimePeriod>, IComparable<TimePeriod>
     {

@@ -4,7 +4,7 @@ namespace Time_And_TimePeriod_Milliseconds_Lib
 {
     /// <summary>
     /// <c>Time</c> is a simple representation of time.
-    /// Contains basic methods to work with Time and TimePeriod
+    /// Contains basic methods to work with Time and TimePeriod. Support milliseconds
     /// </summary>
     public readonly struct Time : IEquatable<Time>, IComparable<Time>
     {
