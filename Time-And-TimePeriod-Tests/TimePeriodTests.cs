@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Time_And_TimePeriod_Lib;
+using Time_And_TimePeriod_Lib.Basic;
 
 namespace Time_And_TimePeriod_Tests.TimePeriod_Tests
 {

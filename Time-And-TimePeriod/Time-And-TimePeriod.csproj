@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Time-And-TimePeriod-Lib\Time-And-TimePeriod-Lib.csproj" />
+    <ProjectReference Include="..\Time-And-TimePeriod-Miliseconds-Lib\Time-And-TimePeriod-Milliseconds-Lib.csproj" />
   </ItemGroup>
 
 </Project>

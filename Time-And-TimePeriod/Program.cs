@@ -1,5 +1,6 @@
 ﻿using System;
-using Time_And_TimePeriod_Lib;
+using Time_And_TimePeriod_Lib.Basic;
+using ms = Time_And_TimePeriod_Milliseconds_Lib;
 
 namespace Time_And_TimePeriod
 {
@@ -7,7 +8,16 @@ namespace Time_And_TimePeriod
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\n\tAplikacja konsolowa przedstawiająca poprawność zaimplementowanych typów\n");
+            var timeWithMs = new ms.Time(12, 30, 10, 999);
+            Console.WriteLine(timeWithMs);
+            var timemsString = new ms.Time("12:30:10.900");
+            Console.WriteLine(timemsString);
+
+            var s = new ms.TimePeriod(2.920);
+            Console.WriteLine(s);
+
+
+
             Console.WriteLine("\n======== Time ========");
             var timeOneParam = new Time(12);
             var timeTwoParams = new Time(23, 59);

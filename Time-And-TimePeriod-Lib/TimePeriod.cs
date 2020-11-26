@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Time_And_TimePeriod_Lib
+namespace Time_And_TimePeriod_Lib.Basic
 {
     /// <summary>
     /// <c>TimePeriod</c> represents time interval between two 'points' of time

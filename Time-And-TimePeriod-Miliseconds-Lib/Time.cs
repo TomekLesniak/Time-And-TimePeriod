@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Time_And_TimePeriod_Lib.Basic
+namespace Time_And_TimePeriod_Milliseconds_Lib
 {
     /// <summary>
     /// <c>Time</c> is a simple representation of time.
@@ -12,14 +12,18 @@ namespace Time_And_TimePeriod_Lib.Basic
         /// Get the hour of the time represented by that instance.
         /// </summary>
         public byte Hours { get; }
+
         /// <summary>
         /// Get the minute of the time represented by that instance
         /// </summary>
         public byte Minutes { get; }
+
         /// <summary>
         /// Get the second of the time represented by that instance
         /// </summary>
         public byte Seconds { get; }
+
+        public int Milliseconds { get; }
 
         /// <summary>
         /// Initializes a new instance of Time struct.
@@ -27,32 +31,36 @@ namespace Time_And_TimePeriod_Lib.Basic
         /// <param name="hours">Hour (0-23)</param>
         /// <param name="minutes">Minutes (0-59)</param>
         /// <param name="seconds">Seconds (0-59)</param>
-        public Time(byte hours = 0, byte minutes = 0, byte seconds = 0)
+        public Time(byte hours = 0, byte minutes = 0, byte seconds = 0, int milliseconds = 0)
         {
-            if (hours >= 24 || minutes >= 60 ||  seconds >= 60)
+            if (hours >= 24 || minutes >= 60 || seconds >= 60 || milliseconds < 0 || milliseconds >= 1000)
                 throw new FormatException("Invalid time format");
 
             Hours = hours;
             Minutes = minutes;
             Seconds = seconds;
+            Milliseconds = milliseconds;
         }
 
         /// <summary>
         /// Initializes a new instance of Time struct
         /// </summary>
-        /// <param name="time">Time representation formatted in hh:mm:ss</param>
-        /// <example>12:1:23 is valid format as well</example>
+        /// <param name="time">Time representation formatted in hh:mm:ss.mmm</param>
+        /// <example>12:1:23.999 is valid format as well</example>
         public Time(string time)
         {
             byte hours, minutes, seconds;
+            int milliseconds;
             try
             {
                 // I assumed that it is not required to write additional 0 in time input between(0-9),
-                // so input like 12:1:30 is valid whilst still will be printed as :01:
-                var split = time.Split(':');
-                hours = byte.Parse(split[0]);
-                minutes = byte.Parse(split[1]);
-                seconds = byte.Parse(split[2]);
+                // so input like 12:1:30:450 is valid whilst still will be printed as :01:
+                var hoursAndMinutes = time.Split(':');
+                var secondsAndMilliSeconds = hoursAndMinutes[2].Split('.');
+                hours = byte.Parse(hoursAndMinutes[0]);
+                minutes = byte.Parse(hoursAndMinutes[1]);
+                seconds = byte.Parse(secondsAndMilliSeconds[0]);
+                milliseconds = int.Parse(secondsAndMilliSeconds[1]);
             }
             catch (OverflowException)
             {
@@ -63,29 +71,30 @@ namespace Time_And_TimePeriod_Lib.Basic
                 throw new FormatException("Invalid string representation of Time");
             }
 
-            if (hours >= 24 || minutes >= 60 || seconds >= 60)
+            if (hours >= 24 || minutes >= 60 || seconds >= 60 || milliseconds < 0 || milliseconds >= 1000)
                 throw new ArgumentOutOfRangeException();
 
             Hours = hours;
             Minutes = minutes;
             Seconds = seconds;
+            Milliseconds = milliseconds;
         }
 
-        public override int GetHashCode() => (Hours, Minutes, Seconds).GetHashCode();
+        public override int GetHashCode() => (Hours, Minutes, Seconds, Milliseconds).GetHashCode();
 
         /// <summary>
         /// String representation of time
         /// </summary>
-        /// <returns>String formatted in hh:mm:ss</returns>
-        public override string ToString() => $"{Hours:00}:{Minutes:00}:{Seconds:00}";
-        
+        /// <returns>String formatted in hh:mm:ss.fff</returns>
+        public override string ToString() => $"{Hours:00}:{Minutes:00}:{Seconds:00}.{Milliseconds:000}";
+
         /// <summary>
         /// Compare two time objects if they are 'pointing' at the same time
         /// </summary>
         /// <param name="other">Time object this object is compared to</param>
         /// <returns>True if both 'points' at the same time, false otherwise</returns>
-        public bool Equals(Time other) => (Hours, Minutes, Seconds) == (other.Hours, other.Minutes, other.Seconds);
-       
+        public bool Equals(Time other) => (Hours, Minutes, Seconds, Milliseconds) == (other.Hours, other.Minutes, other.Seconds, other.Milliseconds);
+
         public override bool Equals(object obj) => obj is Time time && Equals(time);
 
         /// <summary>
@@ -135,7 +144,7 @@ namespace Time_And_TimePeriod_Lib.Basic
         /// <summary>
         /// Compare two objects and determine which one is greater.
         /// Greater is the one with bigger values, starting from hour, then minutes,
-        /// then seconds.
+        /// then seconds, then milliseconds
         /// </summary>
         /// <param name="other">Time object this object is compared to</param>
         /// <returns>Negative integer if smaller, 0 if equal, positive if greater</returns>
@@ -145,8 +154,11 @@ namespace Time_And_TimePeriod_Lib.Basic
             if (hoursComparison != 0) return hoursComparison;
             var minutesComparison = Minutes.CompareTo(other.Minutes);
             if (minutesComparison != 0) return minutesComparison;
-            return Seconds.CompareTo(other.Seconds);
+            var secondsComparison = Seconds.CompareTo(other.Seconds);
+            if (secondsComparison != 0) return secondsComparison;
+            return Milliseconds.CompareTo(other.Milliseconds);
         }
+
 
         /// <summary>
         /// Add given period of time to Time instance
@@ -236,6 +248,5 @@ namespace Time_And_TimePeriod_Lib.Basic
             return new Time((byte)hours, (byte)minutes, (byte)seconds);
         }
 
-
-    } 
+    }
 }
